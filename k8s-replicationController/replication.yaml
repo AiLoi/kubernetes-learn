@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: nginx
+spec:
+  replicas: 3
+  selector:
+    app: nginx
+  template:
+    metadata:
+      name: nginx
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+#在用户定义范围内，如果Pod增多，则ReplicationController 会终止额外的Pod，如果减少，RC 会创建新的pod,如果减少，RC会创建新的pod
+#始终保持在定义范围，例如：RC会在Pod维护后在节点上重新创建新pod
+#注：RC 会替换由于某些原因而被删除或终止的pod，例如在节点故障或中断节点维护的情况下。因此即使应用只需要一个pod，也建议使用RC

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-ebs
+spec:
+  containers:
+  - image: gcr.io/google_containers/test-webserver
+    name: test-container
+    volumeMounts:
+    - mountPath: /test-ebs
+      name: test-volume
+  volumes:
+  - name: test-volume
+    # This AWS EBS volume must already exist.
+    awsElasticBlockStore:
+      volumeID: <volume-id>
+      fsType: ext4
+
+#awsElasticBlockStore 可以挂载AWS上的EBS盘到容器，需要kubernetes运行在AWS的EC2上。
+#aws ec2 create-volume --availability-zone eu-west-1a --size 10 --volume-type gp2

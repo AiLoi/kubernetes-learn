@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: default-cpu-demo
+spec:
+  containers:
+  - name: default-cpu-demo-ctr
+    image: nginx
+    # resources:
+    #   limits:
+    #     cpu: "1"
+    #   requests:
+    #     cpu: 500m
+
+
+#在指定空间创建一个pod，其默认的cpu为1，requests 500m
+#只配置limits --- 那么requests 也会被赋值为和limits一样
+#只配置requests --- 那么limits 会被赋值为和命名空间的默认一样

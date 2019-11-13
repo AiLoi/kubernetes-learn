@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pd
+spec:
+  containers:
+  - image: gcr.io/google_containers/test-webserver
+    name: test-container
+    volumeMounts:
+    - mountPath: /cache
+      name: cache-volume
+  volumes:
+  - name: cache-volume
+    emptyDir: {}
+
+# 使用emptyDir,当Pod分配到Node上时，将会创建emptyDir，并且只要node上得pod一直运行，volume就会一直存。
+# 当pod从node上呗删除时，emptyDir也同时会被删除，存储得数据也将永久删除。注：容器删除不影响emptyDir.

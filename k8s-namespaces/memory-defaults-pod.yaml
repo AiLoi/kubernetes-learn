@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+ name: default-mem-demo
+spec:
+  containers:
+  - name: default-mem-demo-ctr
+    image: nginx
+    # resources:
+    #   limits:
+    #     memory: "1Gi"
+    #   requests:
+    #     memory: "128Mi"
+
+    #注： 命名空间的中配置是limits 是512 ，requests 是256
+
+#只配置limits  ----1G ，注意这里内存的限额会被赋值为1G,而不是512，而requests也会被赋值与limits相等，即1G,而不是256
+#只配置requests ----128M ,注意这里的limit会被赋值为命名空间的默认512M,而requests 会被复制为128M
+
+#默认内训限额与请求的动机
+#如果命名空间具有资源配额，它的内存限额设置默认值是有意义的。
+#1. 在命名空间运行的每一个容器必须有他自己的内存限额
+#2. 在命名空间中所有的容器使用的内存总量不能超出指定的限额

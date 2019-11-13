@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: ReplicaSet
+metadata:
+  name: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      tier: frontend
+    matchExpressions:
+      - key: tier
+        operator: In
+        values:
+          - frontend
+  template:
+    metadata:
+      labels:
+        app: guestbook
+        tier: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          env:
+            - name: GET_HOSTS_FROM
+              value: dns
+          ports:
+            - containerPort: 80
+
+#ReplicaSet 是Replication Controller 的升级版本。RS 和 RC 之间的唯一区别是对选择器的支持。RS支持label user guide 中描述的set-based选择器要求
+#而RC仅支持equality-based的选择器要求
+
+#RS 能确保运行指定数量的Pod，而Deployment 是一个更高层次的概念，它能管理RS，并提供对pod的更新等功能，因此建议使用Deployment 来管理RS

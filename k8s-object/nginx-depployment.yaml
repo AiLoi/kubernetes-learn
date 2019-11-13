@@ -1,0 +1,21 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+
+
+#k8s 中创建对象时，必须提供描述其所需Status的对象Spec,以及关于对象（如name）的一些基本信息。
+#当使用k8s API 创建对象时，该API 请求必须将该信息作为JSON包含在请求的body中。通常，可以将信息提供给kubectl.yaml文件，
+#在进行API请求时，kubectl将信息转换为JSON

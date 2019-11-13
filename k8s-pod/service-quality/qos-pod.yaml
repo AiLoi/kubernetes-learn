@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-demo
+spec:
+  containers:
+    - name: qos-demo-ctr
+      image: nginx
+      resources:
+        limits:
+          memory: 200Mi
+          cpu: 700m
+        requests:
+          memory: 200Mi
+          cpu: 700m
+
+#给Pod配置特定的服务质量（QoS）等级。
+# Guaranteed pod里的每个容器都必须有内存，CPU限制和请求，而且必须一样
+# Burstable pod 不满足Qos等级Guaranteed 的要求， pod里至少有一个容器有内存或者CPU请求
+# BestEffort pod里的容器必须没有任何内存或CPU的限制或请求

@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: liveness-http
+spec:
+  containers:
+  - args:
+      - /server
+    image: gcr.io/google_containers/liveness
+    name: liveness
+    livenessProbe:
+      httpGet:
+        port: 8080
+        path: /healthz
+        httpHeaders:
+          - name: X-Custom_Header
+            value: Awesome
+      initialDelaySeconds: 15
+      timeoutSeconds: 1

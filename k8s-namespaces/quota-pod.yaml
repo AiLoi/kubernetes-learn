@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+    name: pod-demo
+spec:
+    hard:
+      pods: "2"
+
+#设置Pod配额以限制可以在名字空间中运行的Pod数量，通过ResourceQuota对象设置
+#可以通过 kubectl get resourcequota pod-demo --namespace=quota-pod-example --output=yaml 来查看配额信息

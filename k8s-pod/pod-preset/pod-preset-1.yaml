@@ -1,0 +1,26 @@
+apiVersion: settings.k8s.io/v1alpha1
+kind: PodPreset
+metadata:
+  name: allow-database
+spec:
+  selector:
+    matchLabels:
+      role: frontend
+  env:
+    - name: DB_PORT
+      value: "6379"
+  volumeMounts:
+    - mountPath: /cache
+      name: cache-volume
+  volumes:
+    - name: cache-volume
+      emptyDir: {}
+
+  # 在集群中使用Pod Preset
+# api 类型setting.k8s.io/v1alpha1/podpreset
+# 已启用 注入控制器 podpreset
+# 已定义pod preset
+
+#kubectl apply -f pod-preset.yml
+
+# 在一些情况下，不想对pod进行改动时，可以在pod 得spec 中添加 podpreset.admission.kubernetes.io/exclude:"true"

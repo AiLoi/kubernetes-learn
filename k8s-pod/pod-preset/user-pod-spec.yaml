@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: website
+  labels:
+    app: website
+    role: frontend
+spec:
+  containers:
+    - name: website
+      image: nginx
+      ports:
+        - containerPort: 80
+
+
+
+
+  # pod preset 是一种api资源，在pod创建时，用户可以用它将额外的运行时需求信息注入pod。
+# 使用标签选择器（label-selector）来指定Pod Preset所使用的Pod
